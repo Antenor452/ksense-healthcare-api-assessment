@@ -24,10 +24,10 @@ export const FetchPatientsResponseApiSchema = z
   .transform((response) => {
     //Variant 1 :{data,pagination,metadata}
     if ("data" in response) {
-      console.info("Got Fetch Patients Variant 1");
+      // console.info("Got Fetch Patients Variant 1");
       return response;
     }
-    console.info("Got Fetch Patients Variant 2 ");
+    // console.info("Got Fetch Patients Variant 2 ");
     return {
       data: response.patients,
       pagination: {

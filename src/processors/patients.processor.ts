@@ -56,19 +56,19 @@ export const generatePatientAlters = async (): Promise<InternalAlerts> => {
       }
     }
 
-    console.log(`Processed page ${currentPage} - count : ${patients.length}`);
+    // console.log(`Processed page ${currentPage} - count : ${patients.length}`);
     hasMore = pagination.hasNext;
     processedPatientsCount += patients.length;
 
     currentPage++;
   }
 
-  console.log(`Processed ${processedPatientsCount} patients`);
-  console.log({
-    high_risk_patients: alerts.high_risk_patients.size,
-    fever_patients: alerts.fever_patients.size,
-    data_quality_issues: alerts.data_quality_issues.size,
-  });
+  // console.log(`Processed ${processedPatientsCount} patients`);
+  // console.log({
+  //   high_risk_patients: alerts.high_risk_patients.size,
+  //   fever_patients: alerts.fever_patients.size,
+  //   data_quality_issues: alerts.data_quality_issues.size,
+  // });
 
   return alerts;
 };
