@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const paginationApiSchema = z.object({
+export const PaginationApiSchema = z.object({
   page: z.number(),
   limit: z.number(),
   total: z.number(),
@@ -8,3 +8,5 @@ export const paginationApiSchema = z.object({
   hasNext: z.boolean(),
   hasPrevious: z.boolean(),
 });
+
+export type PaginationApiType = z.infer<typeof PaginationApiSchema>;

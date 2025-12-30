@@ -1,14 +1,14 @@
 import { z } from "zod";
-import { metadataApiSchema } from "./metadata.api.schema";
-import { paginationApiSchema } from "./pagination.api.schema";
+import { MetadataApiSchema } from "./metadata.api.schema";
+import { PaginationApiSchema } from "./pagination.api.schema";
 import { PatientApiSchema } from "./patient.api.schema";
 
 //Response variants
 
 const PatientsDataResponse = z.object({
   data: z.array(PatientApiSchema),
-  pagination: paginationApiSchema,
-  metadata: metadataApiSchema.optional().nullable(),
+  pagination: PaginationApiSchema,
+  metadata: MetadataApiSchema.optional().nullable(),
 });
 
 const PatientsFlatPaginationSchema = z.object({

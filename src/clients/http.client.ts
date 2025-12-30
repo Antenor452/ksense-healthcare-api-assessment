@@ -1,12 +1,12 @@
 import { sleep } from "../utils/sleep.";
-import { ApiErrorSchema, ApiErrorType } from "./error";
+import { ApiErrorSchema, ApiErrorType } from "../errors/error.api";
 
 type APIFetchOptions = RequestInit & {
   params?: Record<string, string | number | boolean>;
   retryConfig?: {
-    maxRetries: number;
-    initialDelay: number;
-    maxDelay: number;
+    maxRetries?: number;
+    initialDelay?: number;
+    maxDelay?: number;
     retryOnStatusCodes?: number[];
   };
 };
@@ -30,7 +30,6 @@ export const apiFetch = async <T>(
 
   const maxRetries = retryConfig?.maxRetries || 3;
   const initialDelay = retryConfig?.initialDelay || 1000;
-  const maxDelay = retryConfig?.maxDelay || 5000;
   const retryOnStatusCodes = retryConfig?.retryOnStatusCodes || [
     408, 429, 500, 502, 503, 504,
   ];
@@ -44,7 +43,7 @@ export const apiFetch = async <T>(
     fullUrl += `?${paramsString}`;
   }
 
-  for (let attempt = 0; attempt < maxRetries; attempt++) {
+  for (let attempt = 0; attempt < maxRetries + 1; attempt++) {
     try {
       const response = await fetch(fullUrl, {
         ...restOptions,
@@ -95,14 +94,14 @@ export const apiFetch = async <T>(
       }
 
       //Cap delay and add random jitter
-      delay = Math.min(delay, maxDelay) + Math.random() * 100;
+      delay = delay + Math.random() * 100;
       await sleep(delay);
     } catch (error) {
       console.error(
         `Request to ${fullUrl} failed on attempt ${attempt + 1}:`,
         error
       );
-      if (attempt === maxRetries - 1) {
+      if (attempt === maxRetries) {
         throw error;
       }
     }
